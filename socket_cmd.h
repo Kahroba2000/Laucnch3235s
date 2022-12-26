@@ -52,6 +52,7 @@ int32_t cmdRecvCallback(void *arg);
 
 int32_t printRecvUsage(void *arg);
 
+
 void drawRxHist(SlWlanGetRxStatResponse_t *rxStatResp);
 
 #endif /* __SOCKET_CMD_H__ */

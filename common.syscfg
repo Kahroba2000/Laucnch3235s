@@ -23,7 +23,6 @@ const GPIO4          = GPIO.addInstance();
 const GPIO5          = GPIO.addInstance();
 const Power          = scripting.addModule("/ti/drivers/Power");
 const SPI            = scripting.addModule("/ti/drivers/SPI");
-const SPI1           = SPI.addInstance();
 const Timer          = scripting.addModule("/ti/drivers/Timer");
 const Timer1         = Timer.addInstance();
 const Timer2         = Timer.addInstance();
@@ -49,16 +48,14 @@ const JSON           = scripting.addModule("/ti/utils/JSON");
 /**
  * Write custom configuration values to the imported modules.
  */
-Display1.$name                          = "CONFIG_Display_0";
-Display1.$hardware                      = system.deviceData.board.components.XDS110UART;
-Display1.useUART2                       = false;
-Display1.uart.$name                     = "CONFIG_UART_0";
-Display1.uart.useDMA                    = true;
-Display1.uart.uart.$assign              = "UART0";
-Display1.uart.uart.txPin.$assign        = "ball.55";
-Display1.uart.uart.rxPin.$assign        = "ball.57";
-Display1.uart.uart.txDmaChannel.$assign = "UDMA_CH9";
-Display1.uart.uart.rxDmaChannel.$assign = "UDMA_CH8";
+Display1.$name                   = "CONFIG_Display_0";
+Display1.$hardware               = system.deviceData.board.components.XDS110UART;
+Display1.useUART2                = false;
+Display1.uart.$name              = "CONFIG_UART_0";
+Display1.uart.useDMA             = true;
+Display1.uart.uart.$assign       = "UART0";
+Display1.uart.uart.txPin.$assign = "ball.55";
+Display1.uart.uart.rxPin.$assign = "ball.57";
 
 Crypto1.$name = "CONFIG_Crypto_0";
 
@@ -87,17 +84,6 @@ GPIO5.$name          = "CONFIG_GPIO_LED_2";
 Power.ioRetentionShutdown = ["GRP_1"];
 Power.parkPins.$name      = "ti_drivers_power_PowerCC32XXPins0";
 
-SPI1.$name                    = "CONFIG_SPI_0";
-SPI1.mode                     = "Four Pin SS Active Low";
-SPI1.defaultTxBufferValue     = "0";
-SPI1.spi.$assign              = "SPI0";
-SPI1.spi.sclkPin.$assign      = "boosterpack.7";
-SPI1.spi.misoPin.$assign      = "boosterpack.14";
-SPI1.spi.mosiPin.$assign      = "boosterpack.15";
-SPI1.spi.dmaRxChannel.$assign = "UDMA_CH6";
-SPI1.spi.dmaTxChannel.$assign = "UDMA_CH7";
-SPI1.spi.ssPin.$assign        = "boosterpack.18";
-
 Timer1.$name         = "CONFIG_TIMER_0";
 Timer1.timerType     = "32 Bits";
 Timer1.timer.$assign = "Timer0";
@@ -109,8 +95,7 @@ Timer3.$name         = "CONFIG_TIMER_2";
 Timer3.timer.$assign = "Timer1";
 
 UART21.$name              = "CONFIG_UART2_0";
-UART21.dataDirection      = "Receive Only";
-UART21.uart.rxPin.$assign = "boosterpack.17";
+UART21.uart.txPin.$assign = "boosterpack.15";
 
 Watchdog1.$name            = "CONFIG_WATCHDOG_0";
 Watchdog1.watchdog.$assign = "WATCHDOG0";
@@ -131,8 +116,12 @@ SlNet1.ifName = "CC32xx";
  * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
  * re-solve from scratch.
  */
-GPIO3.gpioPin.$suggestSolution            = "boosterpack.29";
-GPIO4.gpioPin.$suggestSolution            = "boosterpack.9";
-GPIO5.gpioPin.$suggestSolution            = "boosterpack.10";
-UART21.uart.$suggestSolution              = "UART1";
-UART21.uart.rxDmaChannel.$suggestSolution = "UDMA_CH10";
+Display1.uart.uart.txDmaChannel.$suggestSolution = "UDMA_CH9";
+Display1.uart.uart.rxDmaChannel.$suggestSolution = "UDMA_CH8";
+GPIO3.gpioPin.$suggestSolution                   = "boosterpack.29";
+GPIO4.gpioPin.$suggestSolution                   = "boosterpack.9";
+GPIO5.gpioPin.$suggestSolution                   = "boosterpack.10";
+UART21.uart.$suggestSolution                     = "UART1";
+UART21.uart.txDmaChannel.$suggestSolution        = "UDMA_CH11";
+UART21.uart.rxPin.$suggestSolution               = "boosterpack.18";
+UART21.uart.rxDmaChannel.$suggestSolution        = "UDMA_CH10";

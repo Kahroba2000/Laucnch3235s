@@ -227,6 +227,20 @@ int TrimSpace(char * pcInput)
     return(strlen(pcInput));
 }
 
+
+int8_t GetValue(void *arg){
+    int32_t status;
+    uint8_t input_temp;
+    status = UART_readPolling(uartHandle, &input_temp, 1);
+    return (input_temp);
+}
+
+void SendValue(uint8_t val, uint8_t len){
+    int32_t status;
+    status = UART_writePolling(uartHandle, &val , len);
+    return(0);
+}
+
 //*****************************************************************************
 //
 //! Get the command string, and allow for it to be edited via UART

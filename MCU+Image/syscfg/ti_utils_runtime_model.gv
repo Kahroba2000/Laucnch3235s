@@ -33,9 +33,6 @@ digraph Model
     ti_drivers_SPI -> ti_drivers_Power
     ti_drivers_SPI -> ti_drivers_Board
     ti_drivers_SPI -> CONFIG_NWP_SPI
-    CONFIG_SPI_0 -> ti_drivers_DMA
-    CONFIG_SPI_0 -> ti_drivers_Power
-    CONFIG_SPI_0 -> ti_drivers_Board
 
     // mod.$name=/ti/drivers/Timer
     CONFIG_TIMER_0 -> ti_drivers_Power

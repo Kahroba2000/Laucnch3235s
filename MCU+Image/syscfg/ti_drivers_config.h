@@ -77,15 +77,7 @@ extern const uint_least8_t GPIO_pinUpperBound;
 
 extern const uint_least8_t              CONFIG_NWP_SPI_CONST;
 #define CONFIG_NWP_SPI                  0
-/*
- *  MOSI: P07
- *  MISO: P06
- *  SCLK: P05
- *  SS: P08
- */
-extern const uint_least8_t              CONFIG_SPI_0_CONST;
-#define CONFIG_SPI_0                    1
-#define CONFIG_TI_DRIVERS_SPI_COUNT     2
+#define CONFIG_TI_DRIVERS_SPI_COUNT     1
 
 
 /*
@@ -119,8 +111,8 @@ extern const uint_least8_t              CONFIG_UART_0_CONST;
  */
 
 /*
- *  TX: Unassigned
- *  RX: P45
+ *  TX: P07
+ *  RX: P08
  */
 extern const uint_least8_t                  CONFIG_UART2_0_CONST;
 #define CONFIG_UART2_0                      0

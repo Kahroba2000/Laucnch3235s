@@ -247,7 +247,7 @@ const PowerCC32XX_ConfigV1 PowerCC32XX_config = {
 #include <ti/devices/cc32xx/driverlib/spi.h>
 #include <ti/devices/cc32xx/driverlib/udma.h>
 
-#define CONFIG_SPI_COUNT 2
+#define CONFIG_SPI_COUNT 1
 
 /*
  *  ======== spiCC32XXDMAObjects ========
@@ -281,26 +281,6 @@ const SPICC32XXDMA_HWAttrsV1 spiCC32XXDMAHWAttrs[CONFIG_SPI_COUNT] = {
         .clkPin  = SPICC32XXDMA_PIN_NO_CONFIG,
         .csPin  = SPICC32XXDMA_PIN_NO_CONFIG
     },
-    /* GSPI */
-    {
-        .baseAddr = GSPI_BASE,
-        .intNum = INT_GSPI,
-        .intPriority = (~0),
-        .spiPRCM = PRCM_GSPI,
-        .csControl = SPI_HW_CTRL_CS,
-        .csPolarity = SPI_CS_ACTIVELOW,
-        .pinMode = SPI_4PIN_MODE,
-        .turboMode = SPI_TURBO_OFF,
-        .scratchBufPtr = &spiCC32XXSDMAscratchBuf[CONFIG_SPI_0],
-        .defaultTxBufValue = 0,
-        .rxChannelIndex = UDMA_CH6_GSPI_RX,
-        .txChannelIndex = UDMA_CH7_GSPI_TX,
-        .minDmaTransferSize = 10,
-        .mosiPin = SPICC32XXDMA_PIN_07_MOSI,
-        .misoPin = SPICC32XXDMA_PIN_06_MISO,
-        .clkPin  = SPICC32XXDMA_PIN_05_CLK,
-        .csPin  = SPICC32XXDMA_PIN_08_CS
-    },
 };
 
 /*
@@ -313,15 +293,9 @@ const SPI_Config SPI_config[CONFIG_SPI_COUNT] = {
         .object = &spiCC32XXDMAObjects[CONFIG_NWP_SPI],
         .hwAttrs = &spiCC32XXDMAHWAttrs[CONFIG_NWP_SPI]
     },
-    /* CONFIG_SPI_0 */
-    {
-        .fxnTablePtr = &SPICC32XXDMA_fxnTable,
-        .object = &spiCC32XXDMAObjects[CONFIG_SPI_0],
-        .hwAttrs = &spiCC32XXDMAHWAttrs[CONFIG_SPI_0]
-    },
 };
 
-const uint_least8_t CONFIG_SPI_0_CONST = CONFIG_SPI_0;
+
 const uint_least8_t CONFIG_NWP_SPI_CONST = CONFIG_NWP_SPI;
 const uint_least8_t SPI_count = CONFIG_SPI_COUNT;
 
@@ -466,9 +440,9 @@ static const UART2CC32XX_HWAttrs uart2CC32XXHWAttrs0 = {
     .intPriority        = (~0),
     .flowControl        = UART2_FLOWCTRL_NONE,
     .rxDmaChannel       = UDMA_CH10_UARTA1_RX,
-    .txDmaChannel       = UART2CC32XX_DMACH_UNASSIGNED,
-    .rxPin              = UART2CC32XX_PIN_45_UART1_RX,
-    .txPin              = UART2CC32XX_PIN_UNASSIGNED,
+    .txDmaChannel       = UDMA_CH11_UARTA1_TX,
+    .rxPin              = UART2CC32XX_PIN_08_UART1_RX,
+    .txPin              = UART2CC32XX_PIN_07_UART1_TX,
     .ctsPin             = UART2CC32XX_PIN_UNASSIGNED,
     .rtsPin             = UART2CC32XX_PIN_UNASSIGNED,
     .rxBufPtr           = uart2RxRingBuffer0,

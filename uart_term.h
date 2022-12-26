@@ -26,6 +26,10 @@ int TrimSpace(char * pcInput);
 int GetCmd(char *pcBuffer,
            unsigned int uiBufLen);
 
+int8_t GetValue(void *arg);
+
+void SendValue(uint8_t val, uint8_t len);
+
 void Message(const char *str);
 
 void ReplaceLine(const char *str);

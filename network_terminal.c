@@ -1656,21 +1656,25 @@ int32_t sem_wait_timeout(sem_t *sem,
  */
 void * mainThread(void *arg)
 {
-
-    //////////////////////////////
-
-    int8_t         input;
-    const char   echoPrompt[] = "Echoing characters:\r\n";
-    UART2_Handle uart;
-    UART2_Params uartParams2;
-    size_t       bytesRead;
-    size_t       bytesWritten = 0;
-    uint32_t     status = UART2_STATUS_SUCCESS;
-
-
+//    //////////////////////////////  UART 2 intiialization   //////////////////////////////////
+//
+//    uint8_t       input;
+//    const char   echoPrompt[] = "Echoing characters:\r\n";
+//    UART2_Handle uart;
+//    UART2_Params uartParams2;
+//    size_t       bytesRead;
+//    size_t       bytesWritten = 0;
+//    size_t       size;
+//    uint32_t     status = UART2_STATUS_SUCCESS;
+//
+//
 //    /* Create a UART where the default read and write mode is BLOCKING */
 //    UART2_Params_init(&uartParams2);
 //    uartParams2.baudRate = 921600;
+//    uartParams2.stopBits = 0;
+//    uartParams2.dataLength =3;
+//    uartParams2.parityType = 0;
+//
 //
 //    uart = UART2_open(CONFIG_UART2_0, &uartParams2);
 //
@@ -1678,16 +1682,16 @@ void * mainThread(void *arg)
 //        /* UART2_open() failed */
 //        while (1);
 //    }
+//
+//    /////////////////////////////////
 
-    /////////////////////////////////
 
 
-
-    int32_t             RetVal ;
+    uint32_t             RetVal ;
     pthread_attr_t      pAttrs_spawn;
     struct sched_param  priParam;
     struct timespec     ts = {0};
-    static UART_Handle uartHandle;
+    static UART_Handle uartHandle_temp;
 
     /* Initializes the SPI interface to the Network 
        Processor and peripheral SPI (if defined in the board file) */
@@ -1698,45 +1702,267 @@ void * mainThread(void *arg)
     RetVal = initAppVariables();
 
     /* Init Terminal UART */
-    uartHandle = InitTerm();
+    uartHandle_temp = InitTerm();
 
-//    /////////////////////////  InitTerm  //////////////////////
-//
-//    int8_t i;
-//    UART_Params uartParams;
-//
-//    UART_init();
-//    UART_Params_init(&uartParams);
-//
-//    uartParams.writeDataMode = UART_DATA_BINARY;
-//    uartParams.readDataMode = UART_DATA_BINARY;
-//    uartParams.readReturnMode = UART_RETURN_FULL;
-//    uartParams.readEcho = UART_ECHO_OFF;
-//    uartParams.baudRate = 921600;
-//
-//    uartHandle = UART_open(CONFIG_UART_0, &uartParams);
-//    /* remove uart receive from LPDS dependency */
-//    UART_control(uartHandle, UART_CMD_RXDISABLE, NULL);
-//
-//    /////////////////////////////////////////////
-//
-//    /* initialize the realtime clock */
-//    clock_settime(CLOCK_REALTIME, &ts);
-//
-//    /* Switch off all LEDs on boards */
-//    GPIO_write(CONFIG_GPIO_LED_0, CONFIG_GPIO_LED_OFF);
-//    GPIO_write(CONFIG_GPIO_LED_1, CONFIG_GPIO_LED_OFF);
-//    GPIO_write(CONFIG_GPIO_LED_2, CONFIG_GPIO_LED_OFF);
-//
-//
-//    ///////////////////////////////
-    UART_PRINT("Ready to print the values");
 
+
+////###############################  Serial read and write ##################################
+//
+//
+//    UART_PRINT("Ready to print the values");
+//    int temp=0;
+//    int8_t packet[1000];
+//    int reading=0;
+//    int ittr2 = 0;
 //    /* Loop forever echoing */
+//
+//
+//    while(1){
+////        status = UART_readPolling(uartHandle, &input, 1);
+////        status = UART_writePolling(uartHandle, &input, 1);
+//        int32_t status;
+//        uint8_t temp_val= GetValue(NULL);
+////        SendValue(temp_val, 1);
+//        uint8_t packet[1000];
+//
+//        //################# Magic word ##########################
+//        packet[0] = 2;
+//        packet[1] = 1;
+//        packet[2] = 4;
+//        packet[3] = 3;
+//        packet[4] = 6;
+//        packet[5] = 5;
+//        packet[6] = 8;
+//        packet[7] = 7;
+//
+//
+//        switch (temp_val){
+//                case 2:
+//                    temp = 1;
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 1:
+//                    if (temp==1){
+//                        temp = 2;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 4:
+//                    if (temp == 2){
+//                        temp = 3;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 3:
+//                    if (temp == 3){
+//                        temp = 4;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 6:
+//                    if (temp == 4){
+//                        temp = 5;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 5:
+//                    if (temp == 5){
+//                        temp = 6;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 8:
+//                    if (temp == 6){
+//                        temp = 7;
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                case 7:
+//                    if (temp == 7){
+//                        temp=0;
+////                        UART_PRINT("NEW SIGNAL IS COMMING \n\r");
+////                        //#########################  Start reading data  ##############################
+////                        reading = 1;
+//                        uint8_t temp_package[4]={313, 312, 313, ittr2 - 7};
+//
+//
+//                        temp_val= GetValue(NULL);
+//                        packet[8] = temp_val;
+//                        temp_val= GetValue(NULL);
+//                        packet[9] = temp_val;
+//                        temp_val= GetValue(NULL);
+//                        packet[10] = temp_val;
+//                        temp_val= GetValue(NULL);
+//                        packet[11] = temp_val;
+//
+//
+//                        temp_val= GetValue(NULL);
+//                        packet[12] = temp_val;
+//                        int ittr_1 = temp_val;
+//
+//                        temp_val= GetValue(NULL);
+//                        packet[13] = temp_val;
+//                        int ittr_2 = temp_val;
+//
+//
+//                        temp_val= GetValue(NULL);
+//                        packet[14] = temp_val;
+//
+//
+//                        temp_val= GetValue(NULL);
+//                        packet[15] = temp_val;
+//
+//
+//                        int ik;
+//                        uint16_t itteration = (ittr_2 * 256) + ittr_1;
+//                        for (ik = 0 ; ik < itteration - 16 ; ik++){
+//                            temp_val= GetValue(NULL);
+//                            packet[ik+16]= temp_val;
+//                        }
+//
+//                        for (ik = 0 ; ik < itteration ; ik++){
+////                            packet[ik+13]= temp_val;
+//                            SendValue(packet[ik], 1);
+//                        }
+//
+////                        UART_PRINT("The transmitted signal has the lenght of  %d \n\r", temp_package[3]);
+////                        UART_PRINT("The first and the third data points are  %d and %d \n\r", packet[0], packet[25]);
+////
+////                        status = sl_Send(sock, &temp_package , 4 , 0);
+////
+////                        status = sl_Send(sock, &packet , ittr , 0);
+//
+////                        int ik;
+////                        for (ik = 0 ; ik < ittr ; ik++){
+////                            UART_PRINT("Values  %d \n\r", packet[ik]);
+////                        }
+//                        ittr2=0;
+//
+//                    }else{
+//                        temp = 0;
+//                    }
+////                    packet[ittr]= temp_val;
+//                    break;
+//                default:
+//                    temp = 0;
+////                    packet[ittr]= temp_val;
+//                    break;
+//            }
+//            ittr2++;
+//
+//    }
+//
+//
 //    while (1) {
 //        bytesRead = 0;
 //        while (bytesRead == 0) {
+//
 //            status = UART2_read(uart, &input, 1, &bytesRead);
+//
+//            UART_PRINT("%d \n\r", input);
+//
+////            status = UART_write(uartHandle, &input, 1);
+//
+////            status = UART_read(uartHandle, &input, 1);
+////            status = UART_write(uartHandle, &input, 1);
+//
+////            status = UART_read(uart, &input, 1);
+//
+////            UART_PRINT("%d \n\r",input);
+//
+////            switch (input){
+////                case 2:
+////                    temp = 1;
+////                    packet[ittr]= input;
+////                    break;
+////                case 1:
+////                    if (temp==1){
+////                        temp = 2;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 4:
+////                    if (temp == 2){
+////                        temp = 3;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 3:
+////                    if (temp == 3){
+////                        temp = 4;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 6:
+////                    if (temp == 4){
+////                        temp = 5;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 5:
+////                    if (temp == 5){
+////                        temp = 6;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 8:
+////                    if (temp == 6){
+////                        temp = 7;
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                case 7:
+////                    if (temp == 7){
+////                        temp=0;
+////                        UART_PRINT("NEW SIGNAL IS COMMING \n\r");
+////                        //#########################  Start reading data  ##############################
+////                        reading = 1;
+//////                        UART_PRINT("NEW SIGNAL IS Equal to %d \n\r", packet[10]);
+//////                        UART_PRINT("Itteration is equal to %d \n\r", packet[10]);
+////                        ittr=0;
+////
+////                    }else{
+////                        temp = 0;
+////                        packet[ittr]= input;
+////                    }
+////                    break;
+////                default:
+////                    temp = 0;
+////                    packet[ittr]= input;
+////                    break;
+////            }
+////
+////            ittr++;
+//
+//
+////            bytesWritten = 0;
+////            status = UART2_write(uart, &input, 1, &bytesWritten);
+//
+//
 ////            UART_PRINT("Value is equal to - %d\n",input);
 ////            if (status != UART2_STATUS_SUCCESS) {
 ////                /* UART2_read() failed */
@@ -1745,16 +1971,21 @@ void * mainThread(void *arg)
 //        }
 //
 //        bytesWritten = 0;
-//        status = UART_write(uartHandle, &input, 1);
-////        UART_PRINT(&input);
-////        UART_PRINT("The value was %d \n\r", &input);
+//        while (bytesWritten == 0) {
+//            status = UART2_write(uart, &input, 1, &bytesWritten);
 //
 //
-////            if (status != UART2_STATUS_SUCCESS) {
-////                /* UART2_write() failed */
-////                while (1);
-////            }
+//
+//            if (status != UART2_STATUS_SUCCESS) {
+//                /* UART2_write() failed */
+//                while (1);
+//            }
+//        }
 //    }
+//
+//
+////#####################  End of the serial read and write #############################
+
 
     /////////////////////////////////////  CMD /////////////////////////////////////
     /* Create the sl_Task internal spawn thread */

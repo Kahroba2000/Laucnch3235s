@@ -71,7 +71,7 @@
 #define MAX_FILE_LIST           (20)
 #define MAX_BUF_SIZE            (1400)
 #define MAX_SINGLE_BUF_SIZE    (1)
-
+//static UART_Handle uartHandle;
 
 
 #define SL_STOP_TIMEOUT         (200)
